@@ -1,6 +1,7 @@
 package pisystindiatesting;
 
 
+import com.relevantcodes.extentreports.LogStatus;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -58,17 +59,29 @@ public class selTesting {
         WebElement logout = driver.findElement(By.xpath("/html/body/div[2]/div[2]/ul/li/div/div/ul/li[3]/a"));
         Thread.sleep(500);
         logout.click();
+        Thread.sleep(500);
+        driver.close();
+        ExtendReportBase.reports.flush();
     }
 
     @Test
     public void searchFunc() throws CustomException {
+        ExtendReportBase.test = ExtendReportBase.reports.startTest("Check Search Bar","Checking if search bar works properly with Site Engineer");
         WebElement searchBar = driver.findElement(By.xpath("/html/body/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/div/label/input"));
         searchBar.sendKeys("Site Engineer");
+        ExtendReportBase.test.log(LogStatus.INFO, "Passed \" Site Engineer \" ");
         WebElement searchCount = driver.findElement(By.xpath("//*[@id=\"example_info\"]"));
         if(searchCount.getText().equalsIgnoreCase("Showing 1 to 3 of 3 entries (filtered from 9 total entries)"))
+        {
             System.out.println("Search function works");
+            ExtendReportBase.test.log(LogStatus.PASS, "Search function works");
+        }
         else
+        {
+            ExtendReportBase.test.log(LogStatus.FAIL, "Search function does not work");
             throw new CustomException("Search function does not work");
+        }
+
     }
 
     @Test
@@ -78,9 +91,17 @@ public class selTesting {
         Thread.sleep(1000);
         WebElement header = driver.findElement(By.xpath("/html/body/div[3]/div/div/div[2]/div/div/div/div[1]/div/div[1]/h4"));
         if(header.getText().equalsIgnoreCase("All Shifts Details"))
+        {
+            ExtendReportBase.test.log(LogStatus.PASS, "Shift redirection works");
             System.out.println("Shift Redirection Works");
+        }
+
         else
+        {
+            ExtendReportBase.test.log(LogStatus.FAIL, "Shift redirection does not work");
             throw new CustomException("Shift Redirection does not work");
+        }
+
 
     }
 
