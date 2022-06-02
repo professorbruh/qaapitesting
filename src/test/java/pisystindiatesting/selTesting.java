@@ -14,6 +14,7 @@ public class selTesting {
     static WebDriver driver;
     @BeforeSuite
     public static void setWindow(){
+        ExtendReportBase.createReport();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://tms.pisystindia.com/admin/login");
@@ -69,7 +70,7 @@ public class selTesting {
         ExtendReportBase.test = ExtendReportBase.reports.startTest("Check Search Bar","Checking if search bar works properly with Site Engineer");
         WebElement searchBar = driver.findElement(By.xpath("/html/body/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/div/label/input"));
         searchBar.sendKeys("Site Engineer");
-        ExtendReportBase.test.log(LogStatus.INFO, "Passed \" Site Engineer \" ");
+        ExtendReportBase.test.log(LogStatus.INFO, "Passed  Site Engineer  ");
         WebElement searchCount = driver.findElement(By.xpath("//*[@id=\"example_info\"]"));
         if(searchCount.getText().equalsIgnoreCase("Showing 1 to 3 of 3 entries (filtered from 9 total entries)"))
         {
@@ -86,7 +87,9 @@ public class selTesting {
 
     @Test
     public void shiftDetails() throws CustomException, InterruptedException {
+        ExtendReportBase.test = ExtendReportBase.reports.startTest("Check Shift Details","Checking if search bar works properly with Site Engineer");
         WebElement shift = driver.findElement(By.xpath("/html/body/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/table/tbody/tr[1]/td[7]/a"));
+        ExtendReportBase.test.log(LogStatus.INFO, "Entering Shift Details  ");
         shift.click();
         Thread.sleep(1000);
         WebElement header = driver.findElement(By.xpath("/html/body/div[3]/div/div/div[2]/div/div/div/div[1]/div/div[1]/h4"));
